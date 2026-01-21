@@ -282,6 +282,9 @@ const blob = await response.blob();  // Not .json()
 - Custom fonts and colors
 - PDF templates
 
+## License
+MIT License - see LICENSE file for details.
+
 ## Author
 
 Naina Kothari  
