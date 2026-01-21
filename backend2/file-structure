@@ -1,0 +1,16 @@
+pdf-service/
+├── backend/
+│   ├── controllers/
+│   │   └── pdfController.js        # Handles API requests and responses
+│   ├── routes/
+│   │   └── pdfRoutes.js            # Defines endpoints like /generate-pdf
+│   ├── services/
+│   │   └── pdfService.js           # Contains core PDF generation logic
+│   ├── utils/
+│   │   └── helpers.js              # Utility functions (date formatting, etc.)
+│   ├── config/
+│   │   └── pdfConfig.js            # Settings (fonts, templates)
+│   ├── index.js                     # App entry point, connects routes & starts server
+│   ├── package.json
+│   └── .env
+└── README.md
