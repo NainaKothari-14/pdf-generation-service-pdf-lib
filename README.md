@@ -27,6 +27,8 @@ A lightweight PDF generation microservice built with Node.js, Express, and pdf-l
 - Live preview interface
 - Clean MVC architecture
 
+> **Note:** This service supports basic markdown-style formatting including headings (`#`, `##`), bullet lists (`-`), and paragraphs. Perfect for reports, invoices, and documentation.
+
 ## Technology Stack
 
 **Backend:**
@@ -101,6 +103,19 @@ npm run dev
 ```
 
 Frontend runs at `http://localhost:5173`
+
+**4. Test the Application**
+
+1. Open `http://localhost:5173` in your browser
+2. Enter a title and content (try the example below)
+3. Click "Preview" to see page layout
+4. Click "Download PDF" to generate and download
+
+**Quick Test Example:**
+```
+Title: My First PDF
+Content: # Welcome\n- This is item 1\n- This is item 2\n\n## Summary\nPDF generated successfully!
+```
 
 ## Screenshots
 
@@ -337,6 +352,8 @@ Ensure page break logic is implemented in `pdfService.js`:
 
 ## Docker Deployment (Optional)
 
+> **Note:** Docker deployment is optional. The service works perfectly fine running directly with Node.js as shown in Quick Start.
+
 **Backend Dockerfile:**
 
 ```dockerfile
@@ -379,14 +396,23 @@ docker-compose up -d
 
 ## Future Enhancements
 
-- Bold, italic, underline support
-- Table generation
-- Image embedding
-- Custom fonts and colors
-- PDF templates
+**Formatting & Styling:**
+- Bold, italic, and underline text support
+- Custom fonts and color options
+- Table generation for structured data
+
+**Media & Templates:**
+- Image embedding (logos, signatures)
+- Pre-built PDF templates (invoice, report, certificate)
+
+**Integration & Storage:**
 - Cloud storage integration (AWS S3, Google Drive)
-- Async generation with queue system (BullMQ)
-- Digital signatures
+- Async generation with queue system (BullMQ/Redis)
+
+**Advanced Features:**
+- Digital signatures and encryption
+- PDF merging and splitting
+- Watermark support
 
 ## Contributing
 
