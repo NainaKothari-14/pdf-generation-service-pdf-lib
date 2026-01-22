@@ -26,11 +26,11 @@ module.exports = {
   },
 
   assets: {
-    // optional fonts (leave them if you don't use custom fonts)
-    fontRegularPath: path.join(__dirname, "../assets/fonts/Inter-Regular.ttf"),
-    fontBoldPath: path.join(__dirname, "../assets/fonts/Inter-Bold.ttf"),
+    // // optional fonts (leave them if you don't use custom fonts)
+    // fontRegularPath: path.join(__dirname, "../assets/fonts/Inter-Regular.ttf"),
+    // fontBoldPath: path.join(__dirname, "../assets/fonts/Inter-Bold.ttf"),
 
-    // watermark logo fallback (optional)
+    // // watermark logo fallback (optional)
     defaultLogoPath: path.join(__dirname, "../assets/logo.png"),
   },
 };
