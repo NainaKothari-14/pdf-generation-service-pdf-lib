@@ -52,11 +52,16 @@ pdf-service/
 │   ├── config/              # Configuration
 │   └── index.js             # Entry point
 │
-└── frontend/
-    ├── src/
-    │   ├── App.jsx          # Main component
-    │   └── main.jsx         # Entry point
-    └── vite.config.js
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx          # Main component
+│   │   └── main.jsx         # Entry point
+│   └── vite.config.js
+│
+└── screenshots/             # Application screenshots
+    ├── PDFGenerator.png
+    ├── Preview.png
+    └── Downloaded pdf.png
 ```
 
 ## Quick Start
@@ -96,6 +101,23 @@ npm run dev
 ```
 
 Frontend runs at `http://localhost:5173`
+
+## Screenshots
+
+### PDF Generator Interface
+<img src="screenshots/PDFGenerator.png" alt="PDF Generator Interface" width="600"/>
+
+*Clean, intuitive interface for creating PDFs with title and content input*
+
+### Live Preview
+<img src="screenshots/Preview.png" alt="Live Preview" width="600"/>
+
+*Real-time page-by-page preview showing how your content will flow in the final PDF*
+
+### Downloaded PDF
+<img src="screenshots/Downloaded%20pdf.png" alt="Downloaded PDF" width="600"/>
+
+*Professional, multi-page PDF output with headers, footers, and formatted content*
 
 ## API Documentation
 
@@ -216,7 +238,7 @@ Routes → Controllers → Services → Utils
 
 Each layer has a clear responsibility, making the code easy to test and maintain.
 
-## Basic Setup Notes
+## Configuration
 
 ### Environment Variables
 
@@ -228,7 +250,9 @@ NODE_ENV=development
 CORS_ORIGIN=http://localhost:5173
 ```
 
-### Optional: Input Validation
+### Optional Enhancements
+
+#### Input Validation
 
 For production use, consider adding validation:
 
@@ -251,10 +275,27 @@ app.post('/pdf/generate', [
 });
 ```
 
-### Optional: Payload Limits
+#### Payload Limits
 
 ```javascript
 app.use(express.json({ limit: '1mb' }));
+```
+
+#### Rate Limiting
+
+```bash
+npm install express-rate-limit
+```
+
+```javascript
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per window
+});
+
+app.use('/pdf/', limiter);
 ```
 
 ## Troubleshooting
@@ -274,6 +315,68 @@ Frontend must handle binary data correctly:
 const blob = await response.blob();  // Not .json()
 ```
 
+### CORS Errors
+
+Configure CORS properly in backend:
+
+```javascript
+const cors = require('cors');
+
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  credentials: true
+}));
+```
+
+### Multi-Page Issues
+
+Ensure page break logic is implemented in `pdfService.js`:
+- Check bottom margin calculation
+- Reserve footer space before page breaks
+- Verify new page creation when content exceeds threshold
+
+## Docker Deployment (Optional)
+
+**Backend Dockerfile:**
+
+```dockerfile
+FROM node:16-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 5002
+CMD ["node", "index.js"]
+```
+
+**docker-compose.yml:**
+
+```yaml
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+```
+
+Deploy:
+
+```bash
+docker-compose up -d
+```
+
 ## Future Enhancements
 
 - Bold, italic, underline support
@@ -281,15 +384,29 @@ const blob = await response.blob();  // Not .json()
 - Image embedding
 - Custom fonts and colors
 - PDF templates
+- Cloud storage integration (AWS S3, Google Drive)
+- Async generation with queue system (BullMQ)
+- Digital signatures
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
-MIT License - see LICENSE file for details.
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
-Naina Kothari  
+**Naina Kothari**  
 GitHub: [@NainaKothari-14](https://github.com/NainaKothari-14)
 
 ---
 
-Built with [pdf-lib](https://pdf-lib.js.org/)
+Built with [pdf-lib](https://pdf-lib.js.org/) | Inspired by modern microservice architecture
