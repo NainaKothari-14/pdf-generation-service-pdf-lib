@@ -27,7 +27,7 @@ A lightweight PDF generation microservice built with Node.js, Express, and pdf-l
 - Live preview interface
 - Clean MVC architecture
 
-> **Note:** This service supports basic markdown-style formatting including headings (`#`, `##`), bullet lists (`-`), and paragraphs. Perfect for reports, invoices, and documentation.
+> **Note:** This service supports basic markdown-style formatting including headings (`#`, `##`), bullet lists (`-`), and paragraphs. Perfect for reports, documentation, and simple formatted PDFs.
 
 ## Technology Stack
 
